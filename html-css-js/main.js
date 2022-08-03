@@ -77,7 +77,7 @@ document.querySelector('.submit-btn').addEventListener('click', () => {
 })
 
 async function postData(user) {
-    const url = 'http://localhost:3000/users';
+    const url = 'http://localhost:3000/user';
 
     const repsonse = await fetch(url, {
         method: 'POST',
@@ -89,3 +89,36 @@ async function postData(user) {
 
     return repsonse.json();
 }
+
+
+
+async function getData() {
+    const response = await fetch('http://localhost:3000/user', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.json();
+
+}
+
+function puna(userList) {
+    const ul = document.querySelector('.user-list');
+    ul.innerHTML = '';
+
+    userList.forEach(user => {
+        ul.innerHTML +=
+            `
+            <li>${user.username}</li>
+        `
+    });
+
+}
+
+
+document.querySelector('#get-users').addEventListener('click', () => {
+    getData()
+        .then(users => puna(users))
+        .catch(err => console.log(err))
+})
